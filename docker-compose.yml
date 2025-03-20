@@ -12,9 +12,10 @@ services:
       - FLASK_APP=app/__init__.py
       - FLASK_ENV=development
       - FLASK_DEBUG=1
-      - DATABASE_URL=postgresql://admin:admin@db:5432/mashgin_db
+      - DATABASE_URL=postgresql://root:root@db:5432/mashgin_db
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - mashgin_network
   db:
@@ -24,13 +25,19 @@ services:
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
       - POSTGRES_DB=mashgin_db
     ports:
       - "5432:5432"
     networks:
       - mashgin_network
+    healthcheck:
+      test: pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
 networks:
   mashgin_network:
     driver: bridge

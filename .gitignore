@@ -9,3 +9,5 @@ instance/
 venv/
 .env/
 *.venv
+
+postgres_data/
