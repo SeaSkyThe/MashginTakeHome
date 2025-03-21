@@ -1,6 +1,9 @@
 import unittest
+import sys
 from app import create_app
 from app.services import item as item_service
+
+from app.services import order as order_service
 
 
 class TestGetItems(unittest.TestCase):

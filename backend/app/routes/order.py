@@ -10,12 +10,12 @@ order_blueprint = Blueprint("order", __name__)
 
 @api.route("/order")
 class Orders(Resource):
-    @api.expect(order_schema)
     @api.response(201, "Order created successfully")
     @api.response(400, "Invalid data")
     @api.doc(
         description="Creates a new order, including order items and payment details."
     )
+    @api.expect(order_schema, validate=True)
     def post(self):
         data = request.json
         if data is None:

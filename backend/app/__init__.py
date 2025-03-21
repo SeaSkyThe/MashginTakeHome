@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import declarative_base
 from app.config import Config
 
+
 api = Api()
 
 
@@ -23,6 +24,7 @@ def register_blueprints(app):
 
 def create_app():
     app = Flask(__name__)
+    app.config["RESTX_VALIDATE"] = True
     CORS(app, origins="*")
 
     # Starting the Flask-RESTX

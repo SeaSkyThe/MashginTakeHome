@@ -30,7 +30,6 @@ category_schema = api.model(
 
 
 # Schemas for Orders/Checkout
-
 order_item_schema = api.model(
     "OrderItem",
     {
@@ -53,9 +52,10 @@ order_schema = api.model(
             required=True, description="Card number", min_length=16, max_length=16
         ),
         "cardholder_name": fields.String(required=True, description="Cardholder name"),
-        "cvc": fields.String(required=True, description="Credit Card Security Code"),
+        "cvc": fields.String(required=True, description="Credit Card Security Code", min_length=3, max_length=4),
         "expiration_date": fields.String(
             required=True, description="Credit Card Expiration date"
         ),
     },
 )
+

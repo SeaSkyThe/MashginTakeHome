@@ -1,7 +1,6 @@
 import unittest
 from app import create_app
 from app.services import order as order_service
-from app import db
 
 
 class TestGetItems(unittest.TestCase):
@@ -26,7 +25,7 @@ class TestGetItems(unittest.TestCase):
             "customer_name": "Marcelo Rodrigues",
             "customer_email": "marcelo.rodrigues@example.com",
             "card_number": "4242424242424242",
-            "cardholder_name": "John Doe",
+            "cardholder_name": "Marcelo Silva",
             "cvc": "123",
             "expiration_date": "12/26",
         }
@@ -36,7 +35,6 @@ class TestGetItems(unittest.TestCase):
         assert order_result.get("message") == "Order created successfully"
         assert order_result.get("total_amount") == 525
 
-
         # Delete the order
         order_id = order_result.get("order_id")
         assert order_id is not None
@@ -45,3 +43,52 @@ class TestGetItems(unittest.TestCase):
             deleted.get("message")
             == f"Order {order_id} and all related records deleted successfully"
         )
+
+    def test_request_with_valid_data(self):
+        """Test that we can create an order with valid data."""
+        payload = {
+            "items": [{"id": 1, "quantity": 2}, {"id": 3, "quantity": 1}],
+            "customer_name": "Marcelo Rodrigues",
+            "customer_email": "marcelo.rodrigues@example.com",
+            "card_number": "4242424242424242",
+            "cardholder_name": "Marcelo Silva",
+            "cvc": "123",
+            "expiration_date": "12/26",
+        }
+
+        with self.app.app_context():
+            response = self.app.test_client().post("/order", json=payload)
+            data = response.get_json()
+
+            assert response.status_code == 201
+            assert data.get("message") == "Order created successfully"
+            assert data.get("total_amount") == 525
+
+            # Delete the order
+            order_id = data.get("order_id")
+            assert order_id is not None
+            deleted = order_service.delete_order(order_id)
+            assert (
+                deleted.get("message")
+                == f"Order {order_id} and all related records deleted successfully"
+            )
+
+    def test_request_with_invalid_data(self):
+        """Test that we can create an order with invalid data."""
+        payload = {
+            "items": [{"id": 1, "quantity": 2}, {"id": 3, "quantity": 1}],
+            "customer_name": "Marcelo Rodrigues",
+            "customer_email": "marcelo.rodrigues@example.com",
+            "card_number": "",  # Invalid card number
+            "cardholder_name": "Marcelo Silva",
+            "cvc": "123",
+            "expiration_date": "12/26",
+        }
+
+        with self.app.app_context():
+            response = self.app.test_client().post("/order", json=payload)
+            data = response.get_json()
+
+            assert response.status_code == 400
+            assert data.get("errors") is not None
+            assert data.get("message") == "Input payload validation failed"
