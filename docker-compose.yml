@@ -18,6 +18,22 @@ services:
         condition: service_healthy
     networks:
       - mashgin_network
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mashgin_frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - VUE_APP_API_URL=http://localhost:5000
+    depends_on:
+       - backend
+    networks:
+      - mashgin_network
   db:
     image: postgres:17.4-alpine
     restart: always
