@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restx import Api
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import declarative_base
 from app.config import Config
@@ -22,6 +23,7 @@ def register_blueprints(app):
 
 def create_app():
     app = Flask(__name__)
+    CORS(app, origins="*")
 
     # Starting the Flask-RESTX
     api.init_app(
