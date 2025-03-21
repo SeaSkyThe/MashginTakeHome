@@ -1,6 +1,7 @@
 import datetime
 from app import db
 from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.orm import relationship
 
 
 class Payment(db.Model):
@@ -15,6 +16,9 @@ class Payment(db.Model):
     transaction_id = Column(String(100), nullable=False)
 
     created_at = Column(DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+
+    # Relashionship
+    order = relationship("Order", back_populates="payments")
 
     def __repr__(self):
         return f"<Payment {self.id} order_id={self.order_id} card_number_last_four={self.card_number_last_four} cardholder_name={self.cardholder_name} amount={self.amount} status={self.status} transaction_id={self.transaction_id}>"

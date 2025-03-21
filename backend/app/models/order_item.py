@@ -2,6 +2,7 @@ import datetime
 
 from app import db
 from sqlalchemy import Column, Integer, DateTime
+from sqlalchemy.orm import relationship
 
 
 class OrderItem(db.Model):
@@ -15,6 +16,10 @@ class OrderItem(db.Model):
     subtotal = Column(Integer, nullable=False)
 
     created_at = Column(DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+
+    # Relashionship
+    order = relationship("Order", back_populates="order_items")
+    item = relationship("Item", back_populates="order_items")
 
     def __repr__(self):
         return f"<OrderItem {self.id} order_id={self.order_id} item_id={self.item_id} quantity={self.quantity} unit_price={self.unit_price} subtotal={self.subtotal}>"

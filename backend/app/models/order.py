@@ -2,6 +2,7 @@ import datetime
 
 from app import db
 from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.orm import relationship
 
 
 class Order(db.Model):
@@ -13,6 +14,14 @@ class Order(db.Model):
     total_amount = Column(Integer, nullable=False)
 
     created_at = Column(DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+
+    # Relashionship
+    order_items = relationship(
+        "OrderItem", back_populates="order", cascade="all, delete-orphan"
+    )
+    payments = relationship(
+        "Payment", back_populates="order", cascade="all, delete-orphan"
+    )
 
     def __repr__(self):
         return f"<Order {self.id} customer_name={self.customer_name} customer_email={self.customer_email} total_amount={self.total_amount}>"
