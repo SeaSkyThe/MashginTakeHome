@@ -404,16 +404,16 @@ graph TD
 
 The components are:
 
-- **App**: The main component, where all the components are merged together.
-- **Header**: The header component, with the logo title and the cart icon.
-- **Body**: The body component, with the category tabs, page divider and the list of items.
-  - **CategoryTabs**: The tabs component, that renders the different categories dinamically.
-  - **CategoryDivider**: The divider component, that renders a line between the tabs and the items.
-  - **CategoryItems**: The items component, that renders the items in a grid format.
-    - **Item**: The item component, that renders a single item, with its image, name, price, quantity and buttons to add/remove it to the cart.
-- **Footer**: The footer component, with a simple copyright text.
-- **CartDrawer**: The cart drawer component, that renders when the cart icon is clicked in the header. Shows the items in the cart, subtotal price and a button to checkout.
-- **CheckoutForm**: The checkout form component, that renders when the checkout button is clicked in the cart drawer. Shows the subtotal price, also with fields to fill with the customer information and payment details.
+- **App**: The main component where everything comes together.
+- **Header**: The header component, with the logo, title and the cart icon.
+- **Body**: The body component, with the category tabs, a divider, and the list of items.
+  - **CategoryTabs**: The tabs component, that dinamically renders the tabs based on the categories.
+  - **CategoryDivider**: The divider component, a line that separates the tabs from the items.
+  - **CategoryItems**: The items component, displays the items for the selected category in a grid layout.
+    - **Item**: The item component, that renders a single item, showing its image, name, price, quantity and buttons to add or remove it from the cart.
+- **Footer**: The footer component, with a simple copyright message.
+- **CartDrawer**: The cart drawer component, that appears when you click the cart icon in the header. Shows the cart items, subtotal and a checkout button.
+- **CheckoutForm**: The checkout form component, that pops up when the checkout button is clicked in the cart drawer. It shows the subtotal price and fields for the customer information and payment details.
 
 ### Screenshots
 
@@ -431,38 +431,39 @@ Checkout form:
 
 # Conclusions
 
-First of all thanks for the opportunity to work on the assignment, It gave me some fun hours.
+First of all thanks for the opportunity to work in the assignment, It gave me some fun hours.
 
-My overall approach was to develop in the simplest way possible, but yet maintaining a structure that I would use in a real project (extensible).
+My overall approach was to develop it in the simplest way possible, but yet maintaining a structure that I would use in a real project (extensible).
 
 Some difficulties I had:
 
 - Figuring out the folder structure and naming is always tricky, especially since we're usually working on existing projects where the folders and files are already in place.
-- Frontend is what I usually face more challenges, especially when it comes to designing and then selecting the right tools to implement the design. But in the end, I think I did a good job.
-- Backend was pretty straightforward for me, the most annoying part was to setup Flask-RESTX and make sure the validations were being done correctly.
+- Frontend is where I usually face the most challenges, especially when it comes to designing and then selecting the right tools to implement the design. But in the end, I think I did a good job.
+- Backend was pretty straightforward for me. The most annoying part was to setup Flask-RESTX and make sure the validations were being done correctly.
 
 In the scope of the assignment, I think I could have done some little improvements, like:
 
 - The design of the whole frontend could be improved based on a UX/UI study.
-- The checkout form could have more strict validations, and I could have used a library to handle them, resulting in a simpler component.
-- Keep cart state between page reloads.
+- The checkout form could benefit from stricter validations, and using a validation library would have made the component simpler and more maintainable.
+- I could have made the cart state persistent across page reloads.
+- More testing, especially in the frontend.
 
 ## Next steps
 
 Some cool next steps for making this a bigger project, thinking about usability and scalability:
 
 - Work in security/authentication.
-- Create a admin panel, where the restaurant owner can manage the categories, items and orders.
-- Add a individual account feature, where the customer can create an account and consult their past orders.
-- Add more payment options, such as PayPal, PIX, etc.
-- Actually implement the payment process, using a payment gateway.
-- Make the user current cart persistent for some time, maybe in a Key-Value store.
-- Implement a search bar, to search for items by name.
-- If needed, make it scalable:
-  - We could add a load balancer to distribute traffic across multiple servers.
+- Build an admin panel for the restaurant owners to easily manage categories, items and orders.
+- Add a user account feature, so customers can create accounts and view their past orders.
+- Introduce additional payment options, such as PayPal, PIX, etc.
+- Integrate a payment gateway to process payments.
+- Make the user's current cart persistent for a set period (e.g., using a Key-Value store) to improve the user experience.
+- Implement a search bar to allow users to easily find items by name.
+- Focus on scalability if needed:
+  - Add a load balancer to distribute traffic across multiple servers, ensuring high availability.
   - Implement caching for menu items to optimize performance and reduce database load, as the application is more read-intensive than write-intensive.
-  - Process payments asynchronously.
-  - Use a CDN to serve the images faster across the world.
+  - Process payments asynchronously, to ensure a smooth user experience that's not dependent on payment processing.
+  - Use a CDN to serve the images quickly, improving load times.
 
 
 ## Thanks for reading!
