@@ -8,17 +8,16 @@ import {
     Box,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import CartItem from "../types/cart";
+import { CartItem } from "../types/cart";
 
 
 
 interface HeaderProps {
     cartItems: CartItem[];
     setIsCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    isCartOpen: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ cartItems, setIsCartOpen, isCartOpen }) => {
+const Header: React.FC<HeaderProps> = ({ cartItems, setIsCartOpen }) => {
     return (
         <AppBar position="fixed" color="secondary" elevation={1} >
             <Toolbar>
@@ -45,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({ cartItems, setIsCartOpen, isCartOpen })
                 </Box>
                 <IconButton
                     color="inherit"
-                    onClick={() => setIsCartOpen(!isCartOpen)}
+                    onClick={() => setIsCartOpen(true)}
                     aria-label="cart"
                 >
                     <Badge badgeContent={cartItems.reduce((total, item) => total + item.quantity, 0)} color="primary">

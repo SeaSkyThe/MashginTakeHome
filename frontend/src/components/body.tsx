@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Category, Item } from '../types/api';
-import CartItem from '../types/cart';
+import { Category, Item } from '../types/item';
+import { CartItem } from '../types/cart';
 import { getItems } from '../api/itemsService';
 import { Box } from '@mui/material';
 import CategoryTabs from './body/categoryTabs';
@@ -27,7 +27,6 @@ const Body: React.FC<BodyProps> = ({ categories, setCategories, cartItems, setCa
     }, []);
 
     const addToCart = (item: Item) => {
-        console.log(cartItems)
         var cartItem = cartItems.find(cartItem => cartItem.id === item.id)
         if (cartItem) {
             cartItem.quantity++;
@@ -58,17 +57,13 @@ const Body: React.FC<BodyProps> = ({ categories, setCategories, cartItems, setCa
             />
 
             <CategoryDivider selectedCategory={selectedCategory} />
-
             <CategoryItems
                 items={selectedCategory ? selectedCategory.items : []}
+                cartItems={cartItems ? cartItems : []}
                 selectedCategoryId={selectedCategory ? selectedCategory.id : null}
                 onAddToCart={addToCart}
                 onRemoveFromCart={removeFromCart}
             />
-
-
-
-
         </Box>
     )
 }

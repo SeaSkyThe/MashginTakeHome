@@ -1,19 +1,29 @@
 import React from 'react';
 import { Grid2 } from '@mui/material';
-import { Item } from '../../types/api';
+import { Item } from '../../types/item';
+import { CartItem } from '../../types/cart';
 import { Card, CardActions, CardContent, CardMedia, Typography, IconButton } from '@mui/material';
 
 import { Add, Remove } from '@mui/icons-material';
 
 interface CategoryItemsProps {
     items: Item[];
+    cartItems: CartItem[];
     selectedCategoryId: number | null;
     onAddToCart: (item: Item) => void;
     onRemoveFromCart: (item: Item) => void;
 }
 
 
-const CategoryItems: React.FC<CategoryItemsProps> = ({ items, selectedCategoryId, onAddToCart, onRemoveFromCart }) => {
+const CategoryItems: React.FC<CategoryItemsProps> = ({ items, cartItems, selectedCategoryId, onAddToCart, onRemoveFromCart }) => {
+
+    const getAddedQuantity = (item: Item) => {
+        const cartItem = cartItems?.find(cartItem => cartItem.id === item.id);
+        if (cartItem) {
+            return cartItem.quantity;
+        }
+        return 0;
+    }
 
     const ItemCard: React.FC<{ item: Item }> = ({ item }) => {
         return (
@@ -25,8 +35,8 @@ const CategoryItems: React.FC<CategoryItemsProps> = ({ items, selectedCategoryId
                     image={`/${item.image_id}.jpg`}
                 />
                 <CardContent sx={{ flexGrow: 1, textAlign: "left" }} >
-                    <Typography variant="h6" component="div">
-                        {item.name}
+                    <Typography variant="h6" component="div" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {item.name} {getAddedQuantity(item) > 0 ? ` (${getAddedQuantity(item)})` : ""}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         ${item.price.toFixed(2)}
@@ -40,7 +50,6 @@ const CategoryItems: React.FC<CategoryItemsProps> = ({ items, selectedCategoryId
                         <Remove />
                     </IconButton>
                 </CardActions>
-
             </Card>
         );
     };

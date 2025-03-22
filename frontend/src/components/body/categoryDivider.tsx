@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider } from '@mui/material';
-import { Category } from '../../types/api';
+import { Category } from '../../types/item';
 
 interface CategoryDividerProps {
     selectedCategory: Category | null;

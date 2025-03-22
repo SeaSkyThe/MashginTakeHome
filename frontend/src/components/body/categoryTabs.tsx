@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tab, Tabs } from '@mui/material';
-import { Category } from '../../types/api';
+import { Category } from '../../types/item';
 
 interface CategoryTabsProps {
     categories: Category[];

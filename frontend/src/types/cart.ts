@@ -1,7 +1,5 @@
-import { Item } from './api';
+import { Item } from './item';
 
-interface CartItem extends Item {
+export interface CartItem extends Item {
     quantity: number;
 }
-
-export default CartItem;
