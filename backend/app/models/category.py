@@ -1,5 +1,4 @@
-import datetime
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, func
 from sqlalchemy.orm import relationship
 from app import db
 
@@ -11,11 +10,11 @@ class Category(db.Model):
     image_id = Column(String(255), nullable=True)
     name = Column(String(100), nullable=False)
 
-    created_at = Column(DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+    created_at = Column(DateTime, default=func.now())
     updated_at = Column(
         DateTime,
-        default=datetime.datetime.now(datetime.timezone.utc),
-        onupdate=datetime.datetime.now(datetime.timezone.utc),
+        default=func.now(),
+        onupdate=func.now(),
     )
 
     # Relationship

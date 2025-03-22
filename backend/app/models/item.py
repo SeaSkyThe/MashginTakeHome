@@ -1,5 +1,4 @@
-import datetime
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, func
 from sqlalchemy.orm import relationship
 from app import db
 
@@ -12,11 +11,11 @@ class Item(db.Model):
     name = Column(String(100), nullable=False)
     price = Column(Integer, nullable=False)
     category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
-    created_at = Column(DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+    created_at = Column(DateTime, default=func.now())
     updated_at = Column(
         DateTime,
-        default=datetime.datetime.now(datetime.timezone.utc),
-        onupdate=datetime.datetime.now(datetime.timezone.utc),
+        default=func.now(),
+        onupdate=func.now(),
     )
 
     # Relationship

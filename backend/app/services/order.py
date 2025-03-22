@@ -1,3 +1,4 @@
+# type: ignore
 from typing import Any
 import uuid
 import time
@@ -25,6 +26,8 @@ def create_order(data: dict) -> dict:
     customer_email = data.get("customer_email")
 
     card_number = data.get("card_number")
+    assert card_number is not None, "Card number is required"
+
     cardholder_name = data.get("cardholder_name")
     cvc = data.get("cvc")
     expiration_date = data.get("expiration_date")

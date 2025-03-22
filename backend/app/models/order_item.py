@@ -1,7 +1,5 @@
-import datetime
-
 from app import db
-from sqlalchemy import Column, Integer, DateTime
+from sqlalchemy import Column, Integer, DateTime, func
 from sqlalchemy.orm import relationship
 
 
@@ -15,7 +13,7 @@ class OrderItem(db.Model):
     unit_price = Column(Integer, nullable=False)
     subtotal = Column(Integer, nullable=False)
 
-    created_at = Column(DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+    created_at = Column(DateTime, default=func.now())
 
     # Relashionship
     order = relationship("Order", back_populates="order_items")

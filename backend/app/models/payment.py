@@ -1,6 +1,5 @@
-import datetime
 from app import db
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, func
 from sqlalchemy.orm import relationship
 
 
@@ -15,7 +14,7 @@ class Payment(db.Model):
     status = Column(String(100), nullable=False)
     transaction_id = Column(String(100), nullable=False)
 
-    created_at = Column(DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+    created_at = Column(DateTime, default=func.now())
 
     # Relashionship
     order = relationship("Order", back_populates="payments")

@@ -1,7 +1,5 @@
-import datetime
-
 from app import db
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, func
 from sqlalchemy.orm import relationship
 
 
@@ -13,7 +11,7 @@ class Order(db.Model):
     customer_email = Column(String(100), nullable=False)
     total_amount = Column(Integer, nullable=False)
 
-    created_at = Column(DateTime, default=datetime.datetime.now(datetime.timezone.utc))
+    created_at = Column(DateTime, default=func.now())
 
     # Relashionship
     order_items = relationship(
